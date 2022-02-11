@@ -17,7 +17,6 @@ if torch.cuda.is_available():
 else:
     device = torch.device('cpu')
 
-
 #  loading model states
 model_75x = CarRecognition75()
 model_75x.load_state_dict(torch.load('model_state75.pt',
@@ -30,10 +29,8 @@ model_100x.load_state_dict(torch.load('model_state100.pt',
 mask_75 = torch.load('mask_75.pt', map_location=device)
 mask_100 = torch.load('mask_100.pt', map_location=device)
 
-
 #  instantiating ensemble
 model_ex = EnsembleModels(model_75x, model_100x)
-
 
 st.title(
     '''
@@ -58,9 +55,8 @@ detect the absence of a car in a given image. Only car images should be uploaded
 image will result in image classification in the context of the predefined car classes.
 
 The model has also not be trained to recognise car front or rear-views, therefore such images should not
-be uploaded as they will yeild inaccurate results.
+be uploaded as they will yield inaccurate results.
 """)
-
 
 image_file = st.file_uploader('Please upload image here:', type=['jpg', 'jpeg', 'png'])
 
@@ -115,22 +111,25 @@ def output():
         save_img(image_file)
         st.image('image.jpg', width=365)
         st.success(classify_image('image.jpg'))
-        response = st.selectbox('Would you like to know why the model has classified this image as such?', ['No', 'Yes'])
+        response = st.selectbox('Would you like to know why the model has classified this image as such?',
+                                ['No', 'Yes'])
         if response == 'Yes':
             st.write('Just a minute...')
+            st.write('Images might experience some distortion in color in explanations...')
             plot_shap('image.jpg', mask_75, 75, model_75x)
             st.subheader('Explanation:')
             st.image('plot.png', width=750)
             st.info('''
             In the image above, the importance of significant pixels are color coded. The 
             presence of blue pixels is indicative of features not typical to that car class
-			and therefore reduce the likelihood of the image belonging to that 
-            class. Red pixels on the other hand represent features most common to a class and
-			are a pointer to an increased likelihood.
+            and therefore reduce the likelihood of the image belonging to that class. Red pixels
+            on the other hand represent features most common to a class and are a pointer to an
+            increased likelihood.
             
-            The model predicts a particular class if there are more red pixels or less blue 
-			pixels compared to other classes.
+            The model predicts a particular class if there are more red pixels or less blue pixels
+            compared to other classes.
             ''')
+            st.write('All Done!')
         else:
             st.write('All Done!')
     except AttributeError:
@@ -138,4 +137,3 @@ def output():
 
 
 output()
-
