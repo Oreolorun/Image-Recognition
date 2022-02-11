@@ -4,4 +4,4 @@ shap
 torch
 torchvision
 matplotlib
-cv2
+opencv-python
