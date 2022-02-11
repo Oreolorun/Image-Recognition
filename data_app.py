@@ -17,20 +17,20 @@ if torch.cuda.is_available():
 else:
     device = torch.device('cpu')
 
-#  loading model states
-model_75x = CarRecognition75()
-model_75x.load_state_dict(torch.load('model_state75.pt',
-                                     map_location=device))
-model_100x = CarRecognition100()
-model_100x.load_state_dict(torch.load('model_state100.pt',
-                                      map_location=device))
 
-#  loading masks
-mask_75 = torch.load('mask_75.pt', map_location=device)
-mask_100 = torch.load('mask_100.pt', map_location=device)
+@st.cache(max_entries=10, ttl=3600)
+def load_models():
+    model_75x = CarRecognition75()
+    model_75x.load_state_dict(torch.load('model_state75.pt',
+                                         map_location=device))
+    model_100x = CarRecognition100()
+    model_100x.load_state_dict(torch.load('model_state100.pt',
+                                          map_location=device))
 
-#  instantiating ensemble
-model_ex = EnsembleModels(model_75x, model_100x)
+    #  instantiating ensemble
+    model_ex = EnsembleModels(model_75x, model_100x)
+    return model_ex
+
 
 st.title(
     '''
@@ -78,22 +78,29 @@ def save_img(img):
         pass
 
 
+@st.cache(max_entries=10, ttl=3600)
 def classify_image(img):
     if mode_choice == 'average':
+        model_ex = load_models()
         return model_ex.average_confidence(img)
     else:
+        model_ex = load_models()
         return model_ex.priority(img)
 
 
-def plot_shap(filepath, mask, size, model):
+@st.cache(max_entries=10, ttl=3600)
+def plot_shap(filepath, size):
     """
     This function produces shap plots
     """
     image = cv2.imread(filepath)
     image = cv2.resize(image, (size, size))
     image = transforms.ToTensor()(image)
-
-    explainer = shap.DeepExplainer(model, mask)
+    model_75x = CarRecognition75()
+    model_75x.load_state_dict(torch.load('model_state75.pt',
+                                         map_location=device))
+    mask = torch.load('mask_75.pt', map_location=device)
+    explainer = shap.DeepExplainer(model_75x, mask)
     shap_values = explainer.shap_values(image.view(-1, 3, size, size))
 
     shap_numpy = [np.swapaxes(np.swapaxes(x, 1, -1), 1, 2) for x in shap_values]
@@ -116,7 +123,7 @@ def output():
         if response == 'Yes':
             st.write('Just a minute...')
             st.write('Images may experience some distortion in color in explanations...')
-            plot_shap('image.jpg', mask_75, 75, model_75x)
+            plot_shap('image.jpg', 75)
             st.subheader('Explanation:')
             st.image('plot.png', width=750)
             st.info('''
