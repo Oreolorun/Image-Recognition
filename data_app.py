@@ -43,20 +43,22 @@ st.title(
 
 st.info("""
 ###### *Usage Instructions:*
-This app classifies car types as either Sedan, Coupe, Truck or SUV. For best results,
-an isometric image of a car should be uploaded, that is,  one which shows both the front and 
-side-view of an object; an example of this is provided in the sidebar. If this is not available, 
-side-view images may be used.
+This app classifies cars as either Sedan, Coupe, Truck or SUV. For best results,
+an isometric image of a car should be uploaded, that is, one which shows both the front and 
+side-view of the car, with the car occupying most of the frame; an example of this 
+is provided in the sidebar (if not visible, tap the arrow at the top edge). However, if this 
+is not available side-view images may be used.
 
-Switch the model ensemble mode in case of wrong predictions as the other ensemble may be
-better suited for that image instance.
+Feel free to switch model ensemble modes in case of wrong predictions as the other mode may be
+better suited for that particular image instance.
 
 ###### *NOTE:*
-The underlying model has not been trained with a semantic segmentation map and therefore is not able to 
+The underlying model has not been trained with a semantic segmentation map and is therefore not able to 
 detect the absence of a car in a given image. Only car images should be uploaded as uploading any other
-image will result in a classification in the context of cars.
+image will result in image classification in the context of the predefined car classes.
 
-The model has also not be trained to recognise car rear-views, therefore rear view images should not be uploaded.
+The model has also not be trained to recognise car rear-views, therefore rear view images should not be uploaded
+as they will yeild inaccurate results.
 """)
 
 
@@ -121,11 +123,13 @@ def output():
             st.image('plot.png', width=750)
             st.info('''
             In the image above, the importance of significant pixels are color coded. The 
-            presence of blue pixels reduce the likelihood of the image belonging to that 
-            particular class while red pixels represent an increased likelihood. 
+            presence of blue pixels is indicative of features not typical to that car class
+			and therefore reduce the likelihood of the image belonging to that 
+            particular class while red pixels represent features most common to a class and
+			are a pointer to an increased likelihood. 
             
-            The model predicts a particular class if there are more red pixels 
-            or less blue pixels compared to other classes.  
+            The model predicts a particular class if there are more red pixels or less blue 
+			pixels compared to other classes.  
             ''')
         else:
             st.write('All Done!')
