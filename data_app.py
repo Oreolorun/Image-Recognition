@@ -86,7 +86,6 @@ def classify_image(img):
         return model_ex.priority(img)
 
 
-@st.cache(max_entries=10, ttl=3600)
 def plot_shap(filepath, size):
     """
     This function produces shap plots
