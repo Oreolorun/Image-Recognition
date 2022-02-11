@@ -18,7 +18,6 @@ else:
     device = torch.device('cpu')
 
 
-@st.cache(max_entries=10, ttl=3600)
 def load_models():
     model_75x = CarRecognition75()
     model_75x.load_state_dict(torch.load('model_state75.pt',
@@ -78,7 +77,6 @@ def save_img(img):
         pass
 
 
-@st.cache(max_entries=10, ttl=3600)
 def classify_image(img):
     if mode_choice == 'average':
         model_ex = load_models()
