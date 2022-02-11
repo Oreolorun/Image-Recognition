@@ -115,27 +115,7 @@ def output():
         save_img(image_file)
         st.image('image.jpg', width=365)
         st.success(classify_image('image.jpg'))
-        response = st.selectbox('Would you like to know why the model has classified this image as such?',
-                                ['No', 'Yes'])
-        if response == 'Yes':
-            st.write('Just a minute...')
-            st.write('Images may experience some distortion in color in explanations...')
-            plot_shap('image.jpg', 75)
-            st.subheader('Explanation:')
-            st.image('plot.png', width=750)
-            st.info('''
-            In the image above, the importance of significant pixels are color coded. The 
-            presence of blue pixels is indicative of features not typical to that car class
-            and therefore reduce the likelihood of the image belonging to that class. Red pixels
-            on the other hand represent features most common to a class and are a pointer to an
-            increased likelihood.
-            
-            The model predicts a particular class if there are more red pixels or less blue pixels
-            compared to other classes.
-            ''')
-            st.write('All Done!')
-        else:
-            st.write('All Done!')
+        st.write('Done!')
     except AttributeError:
         st.write('Please upload image above')
 
