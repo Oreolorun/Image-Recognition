@@ -57,8 +57,8 @@ The underlying model has not been trained with a semantic segmentation map and i
 detect the absence of a car in a given image. Only car images should be uploaded as uploading any other
 image will result in image classification in the context of the predefined car classes.
 
-The model has also not be trained to recognise car rear-views, therefore rear view images should not be uploaded
-as they will yeild inaccurate results.
+The model has also not be trained to recognise car front or rear-views, therefore such images should not
+be uploaded as they will yeild inaccurate results.
 """)
 
 
@@ -118,6 +118,7 @@ def output():
         response = st.selectbox('Would you like to know why the model has classified this image as such?', ['No', 'Yes'])
         if response == 'Yes':
             st.write('Just a minute...')
+			st.write('Images may experience some distortion in explanation...')
             plot_shap('image.jpg', mask_75, 75, model_75x)
             st.subheader('Explanation:')
             st.image('plot.png', width=750)
@@ -125,12 +126,13 @@ def output():
             In the image above, the importance of significant pixels are color coded. The 
             presence of blue pixels is indicative of features not typical to that car class
 			and therefore reduce the likelihood of the image belonging to that 
-            particular class while red pixels represent features most common to a class and
-			are a pointer to an increased likelihood. 
+            class. Red pixels on the other hand represent features most common to a class and
+			are a pointer to an increased likelihood.
             
             The model predicts a particular class if there are more red pixels or less blue 
-			pixels compared to other classes.  
+			pixels compared to other classes.
             ''')
+			st.write('All Done!')
         else:
             st.write('All Done!')
     except AttributeError:
