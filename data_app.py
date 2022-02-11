@@ -115,7 +115,7 @@ def output():
                                 ['No', 'Yes'])
         if response == 'Yes':
             st.write('Just a minute...')
-            st.write('Images might experience some distortion in color in explanations...')
+            st.write('Images may experience some distortion in color in explanations...')
             plot_shap('image.jpg', mask_75, 75, model_75x)
             st.subheader('Explanation:')
             st.image('plot.png', width=750)
