@@ -4,4 +4,4 @@ shap
 torch
 torchvision
 matplotlib
-opencv-python
+opencv-python-headless
