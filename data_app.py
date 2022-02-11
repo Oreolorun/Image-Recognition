@@ -131,7 +131,6 @@ def output():
             The model predicts a particular class if there are more red pixels or less blue 
 			pixels compared to other classes.
             ''')
-			st.write('All Done!')
         else:
             st.write('All Done!')
     except AttributeError:
