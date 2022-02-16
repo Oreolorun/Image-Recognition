@@ -83,6 +83,7 @@ def classify_image(img):
         return model_ex.average_confidence(img)
     else:
         model_ex = load_models()
+        st.write('Priority Mode')
         return model_ex.priority(img)
 
 
