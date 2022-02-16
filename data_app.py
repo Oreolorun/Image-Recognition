@@ -78,7 +78,7 @@ def save_img(img):
 
 
 def classify_image(img):
-    if mode_choice == 'average':
+    if mode_choice == 'Average':
         model_ex = load_models()
         return model_ex.average_confidence(img)
     else:
