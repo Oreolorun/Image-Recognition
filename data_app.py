@@ -57,6 +57,35 @@ The model has also not be trained to recognise car front or rear-views, therefor
 be uploaded as they will yield inaccurate results.
 """)
 
+st.write('Do you need some description of the car classes?')
+description = st.checkbox('Show description')
+if description:
+    st.info(
+        f"""
+        {st.image('sedan.png', width=365)}
+        ###### *Sedan:*
+        A sedan is a passenger car with a three-box chassis configuration where the engine compartment, passenger cabin
+        and cargo compartment are easily distinguishable. Sedans are characterised by their 4-door design with two rows
+        of seats and a subtle curvature of the chassis roofline and rear.
+
+        {st.image('coupe.png', width=365)}
+        ###### *Coupe:*
+        A Coupe is a car similar in design to a Sedan but with differences such as a 2-door design, prominently curved
+        roofline and rear, reduced headroom in the passenger cabin, lower ground clearance and an aerodynamic chassis.
+
+        {st.image('suv.png', width=365)}
+        ###### *SUV*
+        A Sports Utility Vehicle or SUV is a car characterised by its bold chassis design, high ground clearance,
+        significant headroom in the passenger cabin and a cargo compartment which is an extension of the passenger cabin.
+
+        {st.image('truck.png', width=365)}
+        ###### *Truck*
+        A Truck or Pickup Truck is a car designed to carry heavy cargo as evident by its pronounced cargo compartment.
+        Just like an SUV, it also has a bold chassis design and high ground clearance making it suitable for off-road
+        travel and haulage.    
+        """
+    )
+
 image_file = st.file_uploader('Please upload image here:', type=['jpg', 'jpeg', 'png'])
 
 st.sidebar.title('Typical Isometric Car Image')
