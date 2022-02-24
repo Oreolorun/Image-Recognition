@@ -7,7 +7,7 @@ Baselines are trained for each model with the baselines handling overfitting onl
 
 Upon optimization and analysis of test results, both the 100px and 75px batch normalized models showed similar performances (95.91% and 96.08% respectively) but their performance was quite different on individual car classes with the 100px model doing better in identifying Coupes and Trucks while the 75px model does a better job in identifying Sedans and SUVs. Both final models are then ensembled to take advantage of their unique strengths resulting in two ensembling modes with even better performances (96.17% and 97.18%).
 
-Prototyping is done in a notebook file complete with comments, docstrings, visualisations, model explainability and a step-by-step walk thorough of the coding logic. Deployment is done via the python script data_app.py, culminating in a live [streamlit app](https://share.streamlit.io/oreolorun/image-recognition/main/data_app.py).
+Prototyping is done in the **CarTypeImageRecognition.ipynb** notebook file complete with comments, docstrings, visualisations, model explainability and a step-by-step walk thorough of the coding logic. Deployment is done via the python script **data_app.py**, culminating in a live [streamlit app](https://share.streamlit.io/oreolorun/image-recognition/main/data_app.py).
 
 *if notebook file takes too long to render please open on [colab](https://colab.research.google.com/github/Oreolorun/Image-Recognition/blob/main/CarTypeImageRegcognition.ipynb).*
 
