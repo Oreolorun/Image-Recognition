@@ -20,10 +20,10 @@ else:
 
 def load_models():
     model_75x = CarRecognition75()
-    model_75x.load_state_dict(torch.load('model_state75.pt',
+    model_75x.load_state_dict(torch.load('model_states/model_state75.pt',
                                          map_location=device))
     model_100x = CarRecognition100()
-    model_100x.load_state_dict(torch.load('model_state100.pt',
+    model_100x.load_state_dict(torch.load('model_states/model_state100.pt',
                                           map_location=device))
 
     #  instantiating ensemble
@@ -60,7 +60,7 @@ be uploaded as they will yield inaccurate results.
 st.write('Do you need some description of the car classes?')
 description = st.checkbox('Show description')
 if description:
-    st.image('sedan.png', width=300)
+    st.image('images/sedan.png', width=300)
     st.info(
         """
         ###### *Sedan:*
@@ -70,7 +70,7 @@ if description:
         """
     )
 
-    st.image('coupe.png', width=300)
+    st.image('images/coupe.png', width=300)
     st.info(
         """
         ###### *Coupe:*
@@ -79,7 +79,7 @@ if description:
         """
     )
 
-    st.image('suv.png', width=300)
+    st.image('images/suv.png', width=300)
     st.info(
         """
         ###### *SUV*
@@ -88,7 +88,7 @@ if description:
         """
     )
 
-    st.image('truck.png', width=300)
+    st.image('images/truck.png', width=300)
     st.info(
         """
         ###### *Truck*
@@ -102,7 +102,7 @@ if description:
 image_file = st.file_uploader('Please upload image here:', type=['jpg', 'jpeg', 'png'])
 
 st.sidebar.title('Typical Isometric Car Image')
-st.sidebar.image('iso_image2.png')
+st.sidebar.image('images/iso_image2.png')
 st.sidebar.subheader('Options')
 mode_choice = st.sidebar.radio('Set Ensemble Mode', ['Average', 'Priority'])
 
@@ -129,36 +129,13 @@ def classify_image(img):
         return model_ex.priority(img)
 
 
-def plot_shap(filepath, size):
-    """
-    This function produces shap plots
-    """
-    image = cv2.imread(filepath)
-    image = cv2.resize(image, (size, size))
-    image = transforms.ToTensor()(image)
-    model_75x = CarRecognition75()
-    model_75x.load_state_dict(torch.load('model_state75.pt',
-                                         map_location=device))
-    mask = torch.load('mask_75.pt', map_location=device)
-    explainer = shap.DeepExplainer(model_75x, mask)
-    shap_values = explainer.shap_values(image.view(-1, 3, size, size))
-
-    shap_numpy = [np.swapaxes(np.swapaxes(x, 1, -1), 1, 2) for x in shap_values]
-    test_numpy = np.swapaxes(np.swapaxes
-                             (image.view(-1, 3, size, size).numpy(), 1, -1), 1, 2)
-
-    fig = shap.image_plot(shap_numpy, test_numpy,
-                          labels=['sedan', 'coupe', 'suv', 'truck'])
-    plt.savefig('plot.png', dpi=200)
-    pass
-
-
 def output():
     try:
         save_img(image_file)
         st.image('image.jpg', width=365)
         st.success(classify_image('image.jpg'))
         st.write('Done!')
+        os.remove('image.jpg')
     except AttributeError:
         st.write('Please upload image above')
 
