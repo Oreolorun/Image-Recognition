@@ -1,5 +1,7 @@
 ##  Car Classification
-In this project, I built a model capable if correctly classifying cars as either Sedans, Coupes, SUVs or Trucks. Data used for this project is comprised of approximately 83,000 images personally scraped from the web ([see web_scraper_repo](https://github.com/Oreolorun/Web-Scraping)). Images were collected evenly between all 4 car classes so as to prevent class imbalance.
+[Flask App](https://car-classifier-flask.herokuapp.com/) | [Streamlit App](https://share.streamlit.io/oreolorun/image-recognition/main/data_app.py)
+
+In this project, I built a model capable if correctly classifying cars as either Sedans, Coupes, SUVs or Trucks. Data used for this project is comprised of approximately 83,000 images personally scraped from the web ([Web Scraper](https://github.com/Oreolorun/Web-Scraping)). Images were collected evenly between all 4 car classes so as to prevent class imbalance.
 
 A convolutional neural network with a custom architecture inspired by the VGG group of architectures was used for model building. Two distinct models were built, one which works on 75x75 pixel images and another which works on 100x100 pixel images. The idea here is to create two models one which is trained to recognise more general features (75x75 pixels) and another which is trained to recognise a more detailed image (100x100 pixels).
 
