@@ -1,5 +1,5 @@
 ##  Car Classification
-[Flask App](https://car-classifier-flask.herokuapp.com/) | [Streamlit App](https://share.streamlit.io/oreolorun/image-recognition/main/data_app.py)
+[Flask App](https://car-classifier-flask.herokuapp.com/) | [Streamlit App](https://share.streamlit.io/oreolorun/image-recognition/main/data_app.py) | [Docker Image](https://hub.docker.com/repository/docker/oreolorun/image-recognition)
 
 In this project, I built a model capable if correctly classifying cars as either Sedans, Coupes, SUVs or Trucks. Data used for this project is comprised of approximately 83,000 images personally scraped from the web ([Web Scraper](https://github.com/Oreolorun/Web-Scraping)). Images were collected evenly between all 4 car classes so as to prevent class imbalance.
 
